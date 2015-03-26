@@ -1,4 +1,5 @@
 # depslib dependency file v1.0
-1427042033 source:d:\acm\usaco\main.cpp
+1427346680 source:d:\acm\usaco\main.cpp
 	<stdio.h>
+	<conio.h>
 
