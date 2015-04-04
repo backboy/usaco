@@ -24,14 +24,12 @@ bool is_leap_year(int month)
 void round_days(int temp_days)
 {
 
-    //printf("%d %d ",last_13th_was,temp_days);
     if((last_13th_was+temp_days)>=7)
     {
         last_13th_was+=temp_days;
         last_13th_was-=7;
     }
     else last_13th_was+=temp_days;
-    //printf("%d\n",last_13th_was);
 }
 int main()
 {
@@ -42,8 +40,6 @@ int main()
     count_days[0]++;
     while(i<N)
     {
-        //
-        //fprintf(fout,"%d\n",2015+i);
         days_in_months[1]=(is_leap_year(1900+i))?29:28;
         for(j=1; j<=12; j++)
         {
@@ -56,10 +52,8 @@ int main()
 
     }
     count_days[last_13th_was]--;
-    //fprintf(fout,"\n");
     for(i=0; i<7; i++){if(i<6)fprintf(fout,"%d ",count_days[i]);else fprintf(fout,"%d",count_days[i]);}
     fprintf(fout,"\n");
-    //getch();
     return 0;
 
 
