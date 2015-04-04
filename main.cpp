@@ -1,59 +1,66 @@
 /*
 USER: jrony15@gmail.com
 LANG: C++
-PROG: gift1
+PROG: friday
 */
 #include <stdio.h>
-int N;
-char name[21][15];
-int init_balance[15];
-int total_given[15];
-int total_taken[15];
-int search_name(char n[15])
+
+int days_in_months[12]= {31,28,31,30,31,30,31,31,30,31,30,31};
+int count_days[7]= {0,0,0,0,0,0,0}; //0 means Saterday
+int N,last_13th_was=0;
+bool is_leap_year(int month)
 {
-    int i,j;
-    for(i=0; i<N; i++)
+    if(month%100==0)
     {
-        for(j=0; name[i][j]&&n[j]; j++){
-            if(name[i][j]!= n[j])
-                break;
-        }
-        //printf("\n");
-        if(name[i][j]||n[j]);
-        else break;
+        if(month%400==0) return 1;
+        else return 0;
     }
-    return i;
+    else
+    {
+        if(month%4==0) return 1;
+        else return 0;
+    }
 }
-main()
+void round_days(int temp_days)
 {
-    FILE* fin=fopen("gift1.in","r");
-    FILE* fout=fopen("gift1.out","w");
+
+    //printf("%d %d ",last_13th_was,temp_days);
+    if((last_13th_was+temp_days)>=7)
+    {
+        last_13th_was+=temp_days;
+        last_13th_was-=7;
+    }
+    else last_13th_was+=temp_days;
+    //printf("%d\n",last_13th_was);
+}
+int main()
+{
+    FILE* fin=fopen("friday.in","r");
+    FILE* fout=fopen("friday.out","w");
     fscanf(fin,"%d",&N);
-    int i,j;
-    for(i=0; i<N; i++)
+    int i=0,j=0;
+    count_days[0]++;
+    while(i<N)
     {
-        fscanf (fin,"%s", name[i]);
-        init_balance[i]=0;
-        total_taken[i]=0;
-        total_given[i]=0;
-    }
-    for(i=0; i<N; i++)
-    {
-        char donar_name[15];
-        int number_0f_given=0,index=0;
-        fscanf(fin,"%s",donar_name);
-        index=search_name(donar_name);
-        fscanf(fin,"%d %d\n",&init_balance[index],&number_0f_given);
-        total_taken[index]=init_balance[index];
-        int per_given=0;
-        if(number_0f_given!=0)per_given= total_taken[index]/number_0f_given;
-        total_taken[index]-=(per_given*number_0f_given);
-        for(j=0;j<number_0f_given;j++){
-            char given_name[15];
-            fscanf(fin,"%s",given_name);
-            total_given[search_name(given_name)]+=per_given;
+        //
+        //fprintf(fout,"%d\n",2015+i);
+        days_in_months[1]=(is_leap_year(1900+i))?29:28;
+        for(j=1; j<=12; j++)
+        {
+            int temp_day=days_in_months[j-1];
+            temp_day%=7;
+            round_days(temp_day);
+            count_days[last_13th_was]++;
         }
+        i++;
+
     }
-    for(i=0;i<N;i++)fprintf(fout,"%s %d\n",name[i],(total_given[i]+total_taken[i])-init_balance[i]);
-    exit(0);
+    count_days[last_13th_was]--;
+    //fprintf(fout,"\n");
+    for(i=0; i<7; i++){if(i<6)fprintf(fout,"%d ",count_days[i]);else fprintf(fout,"%d",count_days[i]);}
+    fprintf(fout,"\n");
+    //getch();
+    return 0;
+
+
 }

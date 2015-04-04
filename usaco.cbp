@@ -32,6 +32,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="friday.in">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="friday.out">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="gift1.in">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="gift1.out">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="main.cpp" />
 		<Unit filename="ride.in">
 			<Option target="&lt;{~None~}&gt;" />
