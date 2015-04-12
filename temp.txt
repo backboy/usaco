@@ -1,0 +1,65 @@
+for(i=0; i<N; i++)
+    {
+        int index1=i;
+        int index2=(i+1==N)?0:i+1;
+        if(input_str[index1]=='b' && input_str[index2]=='r')
+        {
+            int x=count_backward(index1,input_str[index1])+count_forward(index2,input_str[index2]);
+            MAX=MAX<x?x:MAX;
+        }
+        else if(input_str[index1]=='b' && input_str[index2]=='w')
+        {
+            input_str[index2]='r';
+            int x=count_backward(index1,input_str[index1])+count_forward(index2,input_str[index2]);
+            input_str[index2]='w';
+            MAX=MAX<x?x:MAX;
+        }
+        else if(input_str[index1]=='r' && input_str[index2]=='b')
+        {
+            int x=count_backward(index1,input_str[index1])+count_forward(index2,input_str[index2]);
+            MAX=MAX<x?x:MAX;
+
+        }
+        else if(input_str[index1]=='r' && input_str[index2]=='w')
+        {
+            input_str[index2]='b';
+            int x=count_backward(index1,input_str[index1])+count_forward(index2,input_str[index2]);
+            input_str[index2]='w';
+            MAX=MAX<x?x:MAX;
+
+        }
+        else if(input_str[index1]=='w' && input_str[index2]=='b')
+        {
+            input_str[i]='r';
+            int x=count_backward(index1,input_str[index1])+count_forward(index2,input_str[index2]);
+            input_str[i]='w';
+            MAX=MAX<x?x:MAX;
+
+        }
+        else if(input_str[index1]=='w' && input_str[index2]=='r')
+        {
+            input_str[index1]='b';
+            int x=count_backward(index1,input_str[index1])+count_forward(index2,input_str[index2]);
+            input_str[index1]='w';
+            MAX=MAX<x?x:MAX;
+
+        }
+        else if(input_str[index1]=='w' && input_str[index2]=='w')
+        {
+            input_str[index1]='r';
+            input_str[index2]='b';
+            int x=count_backward(index1,input_str[index1])+count_forward(index2,input_str[index2]);
+            input_str[index1]='w';
+            input_str[index2]='w';
+            MAX=MAX<x?x:MAX;
+
+            input_str[index1]='b';
+            input_str[index2]='r';
+            x=count_backward(i,input_str[index1])+count_forward(index2,input_str[index2]);
+            input_str[index1]='w';
+            input_str[index2]='w';
+            MAX=MAX<x?x:MAX;
+
+        }
+
+    }

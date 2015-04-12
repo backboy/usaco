@@ -32,6 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="beads.in">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="beads.out">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="friday.in">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -49,6 +55,9 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="ride.out">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="temp.txt">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Extensions>

@@ -1,59 +1,104 @@
 /*
 USER: jrony15@gmail.com
 LANG: C++
-PROG: friday
+PROG: beads
 */
 #include <stdio.h>
 
-int days_in_months[12]= {31,28,31,30,31,30,31,31,30,31,30,31};
-int count_days[7]= {0,0,0,0,0,0,0}; //0 means Saterday
-int N,last_13th_was=0;
-bool is_leap_year(int month)
-{
-    if(month%100==0)
-    {
-        if(month%400==0) return 1;
-        else return 0;
-    }
-    else
-    {
-        if(month%4==0) return 1;
-        else return 0;
-    }
-}
-void round_days(int temp_days)
+int N,MAX=0;
+char input_str[360];
+int status[360];
+FILE *fin,*fout;
+
+int count_left_beads(int pos)
 {
 
-    if((last_13th_was+temp_days)>=7)
-    {
-        last_13th_was+=temp_days;
-        last_13th_was-=7;
+    int i=pos,cnt=0;
+    char c=input_str[pos];
+    if(c=='w')
+    {   status[i]=1;
+        i--;
+        cnt++;
+
+        for(;; i--,cnt++)
+        {
+            i=(i<0)?N-1:i;
+            if(input_str[i]!='w' || cnt==N)break;
+            status[i]=1;
+        }
     }
-    else last_13th_was+=temp_days;
+
+
+    if(cnt!=N)
+    {
+        c=input_str[i];
+        status[i]=1;
+        i--;
+        cnt++;
+        for(;; i--,cnt++)
+        {
+            i=(i<0)?N-1:i;
+            if((input_str[i]!=c && input_str[i]!='w')|| cnt==N)break;
+            status[i]=1;
+
+        }
+
+    }
+    return cnt;
+
+
+
+
+}
+
+int count_right_beads(int pos)
+{
+    int i,cnt=0;
+    pos=(pos==N)?0:pos;
+    i=pos;
+    char c=input_str[pos];
+    if(c=='w' && status[i]==0)
+    {
+        i++;
+        cnt++;
+        for(;; i++,cnt++)
+        {
+            i=(i==N)?0:i;
+            if(input_str[i]!='w' || status[i]==1)break;
+        }
+    }
+    if(cnt!=N&& status[i]==0)
+    {
+        c=input_str[i];
+        i++;
+        cnt++;
+        for(;; i++,cnt++)
+        {
+            i=(i==N)?0:i;
+            if((input_str[i]!=c && input_str[i]!='w')|| status[i]==1)break;
+        }
+
+    }
+    return cnt;
+
 }
 int main()
 {
-    FILE* fin=fopen("friday.in","r");
-    FILE* fout=fopen("friday.out","w");
+    fin=fopen("beads.in","r");
+    fout=fopen("beads.out","w");
     fscanf(fin,"%d",&N);
-    int i=0,j=0;
-    count_days[0]++;
-    while(i<N)
+    fscanf(fin,"%s",input_str);
+    int i,j;
+    for(i=0; i<N; i++)
     {
-        days_in_months[1]=(is_leap_year(1900+i))?29:28;
-        for(j=1; j<=12; j++)
-        {
-            int temp_day=days_in_months[j-1];
-            temp_day%=7;
-            round_days(temp_day);
-            count_days[last_13th_was]++;
-        }
-        i++;
-
+        for(j=0;j<N;j++)status[j]=0;
+        int left_cnt=0,right_cnt=0;
+        left_cnt=count_left_beads(i);
+        if(left_cnt<N)right_cnt=count_right_beads(i+1);
+        int x=left_cnt+right_cnt;
+        MAX=(MAX<x)?x:MAX;
     }
-    count_days[last_13th_was]--;
-    for(i=0; i<7; i++){if(i<6)fprintf(fout,"%d ",count_days[i]);else fprintf(fout,"%d",count_days[i]);}
-    fprintf(fout,"\n");
+    fprintf(fout,"%d\n",MAX);
     return 0;
 
 
